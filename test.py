@@ -1,15 +1,19 @@
-import os, re, urllib, urlparse
-#http://blog.livedoor.jp/kato_taka_special/archives/51331337.html
+# -*- coding: utf-8 -*-
+from bs4 import BeautifulSoup
+import urllib2
+#import os, re, urlparse
 
-Site = 'https://www.google.co.jp'
+#Site = 'https://www.google.co.jp'
+Site = 'http://www.yahoo.co.jp/'
 
-t=urllib.urlopen(Site)
-txt = t.read()
-#txt = txt.encode('utf_8')   #
+soup = BeautifulSoup(urllib2.urlopen(Site), "lxml")
+#res = soup.find_all("a")
+#res = soup.a.get("href")
+res = soup.select('a[href^="http://"]')
 
-import rw_file
-rwf = rw_file.rw_file()
+for one in res:
+    print one
 
-rwf.write('dat/file2.txt',txt)
-
+#from pprint import pprint
+#pprint(txt)
 print 'Finish'
