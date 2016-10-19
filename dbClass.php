@@ -1,7 +1,7 @@
 <?php
 //************************************************
 //  データベース接続機能
-//  ver 1.0.1
+//  ver 1.0.2
 //************************************************
 // 定数ファイル読み込み
 require_once("/home/doitsugoland/www/conf.php");
@@ -11,6 +11,12 @@ class DBClass{
 
     var $handle = DSN;		//デフォルトではsqlはglucklich_manegementテーブルへ接続
 //	var $handle = DSN_SHOP;	//ec cube用テーブル glucklich_database_sakura
+    var $dbh = null;        //DBハンドラー
+
+    //----------------------------------------------------------------------
+    public function __construct(){
+        $this->request_sql();       //ハンドラー生成
+    }
 
     //----------------------------------------------------------------------
     /*
@@ -38,7 +44,8 @@ class DBClass{
             return false;
 
         // データベースハンドルを返す
-        $dbh = $this->request_sql();
+        $dbh = $this->dbh;
+        //$dbh = $this->request_sql();
         try{
             //$stmt = $dbh->prepare($dbh->quote($sql));
             $stmt = $dbh->prepare($sql);
@@ -59,7 +66,8 @@ class DBClass{
             return false;
 
         // データベースハンドルを返す
-        $dbh = $this->request_sql();
+        $dbh = $this->dbh;
+        //$dbh = $this->request_sql();
         try{
             $stmt = $dbh->prepare($sql);
             $res = $stmt->execute(array());
@@ -117,7 +125,8 @@ class DBClass{
         //print $sql;
 
         $res = false;
-        $dbh = $this->request_sql();
+        $dbh = $this->dbh;
+        //$dbh = $this->request_sql();
         try{
             $stmt = $dbh->prepare($sql);
             $res = $stmt->execute($arr_vals);
@@ -134,6 +143,7 @@ class DBClass{
     function request_sql(){
         try{
             $dbh = new PDO( $this->handle, DB_USER, DB_PASSWORD);
+            $this->dbh = $dbh;
             return $dbh;
         }catch (PDOException $e){
             print('Error:'.$e->getMessage());
