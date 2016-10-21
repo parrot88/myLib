@@ -35,9 +35,10 @@ if( preg_match("/iPhone/", $useragent) ) {
 //        header('Location:'.DOMAIN."page/pc_top.php");
 }
 //セッション管理---------------------------------------------------------------------------------
-session_start();
 //セッション持続時間設定10年設定
 session_set_cookie_params( 10 * 365 * 24 * 60 * 60 );
+session_start();
+
 //セッションの内容を取得
 $is_login = $is_loign_free = $member_id = null;
 if( (isset($_SESSION['LOGIN']) || isset($_SESSION['LOGIN_FREE']) ) && isset($_SESSION['MEMBER_ID']) ){
