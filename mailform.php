@@ -1,3 +1,4 @@
+<?php
 //-----------------------------------
 //  Mail form functions
 //
@@ -5,7 +6,6 @@
 
 
 Class MailForm{
-
 
 
     //文字列の空チェック 空:true
@@ -17,3 +17,4 @@ Class MailForm{
     }
 
 }
+?>
