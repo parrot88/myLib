@@ -61,24 +61,9 @@ class DBClass extends PDO{
     }
 
     //************************************************
-    // クエリの結果を配列にして返す
-    function get_result_arr($arr){
-
-        $all_list = array();
-        foreach($arr as $feed){
-            foreach ($feed as $key=>$row) {
-                $new_list = array();
-                $new_list['$key'] = $row;
-            }
-            $all_list[] = $new_list;
-        }
-        return $all_list;
-    }
-
-    //************************************************
     // insert prepareを使用したもの
     // SQLインジェクションのためこちらを推奨
-    function InsertP($table,$query){
+    function insertP($table,$query){
 
         $sql1 = 'INSERT INTO '.$table.' (';
         $sql2 = ') VALUES( ';
@@ -101,20 +86,46 @@ class DBClass extends PDO{
             }
         }
         $sql = $sql1.$key_sum.$sql2.$val_sum.$sql3;
+		return $this->excute_sql_bind($sql,$arr_vals);
+   }
 
-        //print $sql;
+    //************************************************
+    // insert prepareを使用したもの
+    function updateP($table,$query,$where = ''){
 
-        $res = false;
-        $dbh = $this->dbh;
-        try{
-            $stmt = $dbh->prepare($sql);
-            $res = $stmt->execute($arr_vals);
-        }catch (PDOException $e){
-            print('Error:'.$e->getMessage());
-            die();
+        $sql1 = 'UPDATE '.$table.' SET ';
+		$sql2 = "";
+		$size = $count($query);
+		foreach($query as $key=>$val){
+			$sql2 .= " ".$key." = ".$key." ";
+			if($size > 1)
+				$sql2 .= ", ";
+			$size--;
+		}
+
+		$sql = $sql1.$sql2." ".$where;
+
+		$arr_vals = array();
+		foreach($query as $key=>$val){
+			$arr_vals[$key] = $this->quote($val);
+		}
+
+		return $this->excute_sql_bind($sql,$arr_vals);
+	}
+
+    //************************************************
+    // クエリの結果を配列にして返す
+    function get_result_arr($arr){
+
+        $all_list = array();
+        foreach($arr as $feed){
+            foreach ($feed as $key=>$row) {
+                $new_list = array();
+                $new_list['$key'] = $row;
+            }
+            $all_list[] = $new_list;
         }
-        $dbh = null;
-        return $res;
+        return $all_list;
     }
 
     //************************************************
