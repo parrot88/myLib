@@ -14,7 +14,9 @@ condition:
 */
 
 
-$get_yen = 300000;
+//$get_yen = 300000;
+//$get_yen = 400000;
+$get_yen = 500000;
 
 $dat = calc_dat($get_yen);
 foreach($dat as $key => $value){
@@ -23,7 +25,6 @@ foreach($dat as $key => $value){
 
 
 function calc_dat($get_yen){
-	$get_yen = 300000;
 	$all_yen = $get_yen * 1.3;
 	$buy_user = $all_yen / 500;
 	$active_user = ($buy_user / 5) * 100;
