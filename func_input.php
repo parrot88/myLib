@@ -2,13 +2,6 @@
 //************************************************
 //  コマンドライン入力機能クラス
 //************************************************
-// 定数ファイル読み込み
-require_once("/home/glucklich/conf.php");
-require_once("/home/glucklich/info.php");
-
-//require_once(__FUNC__."first_init.php");   //初期処理
-require_once(__FUNC__."dbClass.php");
-
 
 class InputClass{
     //-----------------------------------------------------------------------------------------
@@ -16,12 +9,6 @@ class InputClass{
     const ANSWER_YES    = 1;    //回答yes
     const ANSWER_NO     = 2;    //回答no
     const STR_LINE = "//-------------------------------------------------------------------";
-
-    /*
-    public static ANSWER_YES    = 1;        //回答yes
-    public static ANSWER_NO     = 2;        //回答no
-    public static STR_LINE      = "//-------------------------------------------------------------------";
-    */
 
     public $line_str = "//-------------------------------------------------------------------";
     public $eof = PHP_EOL;
